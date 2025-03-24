@@ -1,0 +1,5 @@
+[
+  { "authority": "Municipal Officer", "username": "municipal_admin", "password": "admin123", "role": "admin" },
+  { "authority": "Traffic Police", "username": "traffic_admin", "password": "admin123", "role": "admin" },
+  { "authority": "College Admin", "username": "college_admin", "password": "admin123", "role": "admin" }
+]

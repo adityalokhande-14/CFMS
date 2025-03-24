@@ -1,0 +1,5 @@
+[
+  { "user_id": "1", "fine_type": "Traffic Violation", "fine_amount": 500, "assigned_by": "2" },
+  { "user_id": "2", "fine_type": "Property Tax", "fine_amount": 1000, "assigned_by": "1" },
+  { "user_id": "3", "fine_type": "College Dues", "fine_amount": 1500, "assigned_by": "3" }
+]

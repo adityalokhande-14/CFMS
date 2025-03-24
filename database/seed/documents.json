@@ -1,0 +1,22 @@
+[
+  {
+    "document_name": "Property Tax Clearance Certificate",
+    "description": "Confirms no pending property tax",
+    "available_for": "municipal_admin"
+  },
+  {
+    "document_name": "Traffic Clearance Certificate",
+    "description": "Confirms no traffic violations",
+    "available_for": "traffic_admin"
+  },
+  {
+    "document_name": "College No-Dues Certificate",
+    "description": "Confirms no pending dues",
+    "available_for": "college_admin"
+  },
+  {
+    "document_name": "Corporate Compliance Certificate",
+    "description": "Confirms corporate fine clearance",
+    "available_for": "corporate_admin"
+  }
+]

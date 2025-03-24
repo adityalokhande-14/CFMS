@@ -1,0 +1,6 @@
+[
+  { "name": "Aditya Lokhande", "username": "aditya_l", "password": "user123", "role": "user" },
+  { "name": "Rugved Kulkarni", "username": "rugved_k", "password": "user123", "role": "user" },
+  { "name": "Govind Ukhale", "username": "govind_u", "password": "user123", "role": "user" },
+  { "name": "Yashpal Hake", "username": "yash_h", "password": "user123", "role": "user" }
+]
