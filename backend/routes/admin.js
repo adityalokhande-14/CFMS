@@ -1,7 +1,9 @@
 const express = require('express');
-const { getAdminData } = require('../controllers/adminController');
+const adminController = require('../controllers/adminController');
+const { verifyToken } = require('../controllers/authController');
+
 const router = express.Router();
 
-router.get('/data', getAdminData);
+router.get('/data', verifyToken, adminController.getAdminData);
 
 module.exports = router;

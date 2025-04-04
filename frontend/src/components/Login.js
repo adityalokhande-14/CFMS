@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './styles/Login.css';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('user');
   const [loading, setLoading] = useState(false);
@@ -16,7 +16,7 @@ const Login = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.post('/auth/login', { username, password, role });
+      const res = await axios.post('http://localhost:5000/auth/login', { identifier, password, role });
       localStorage.setItem('token', res.data.token);
       navigate(`/${role}-dashboard`);
     } catch (err) {
@@ -33,16 +33,37 @@ const Login = () => {
           <h2 className="text-center">Login</h2>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <input type="text" className="form-control" id="username" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+              <label htmlFor="identifier">{role === 'user' ? 'Aadhaar Number' : 'Email'}</label>
+              <input
+                type="text"
+                className="form-control"
+                id="identifier"
+                placeholder={role === 'user' ? 'Aadhaar Number' : 'Email'}
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
+                required
+              />
             </div>
             <div className="form-group">
               <label htmlFor="password">Password</label>
-              <input type="password" className="form-control" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
             </div>
             <div className="form-group">
               <label htmlFor="role">Role</label>
-              <select className="form-control" id="role" value={role} onChange={(e) => setRole(e.target.value)}>
+              <select
+                className="form-control"
+                id="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+              >
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
               </select>

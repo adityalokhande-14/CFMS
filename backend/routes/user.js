@@ -1,7 +1,9 @@
 const express = require('express');
-const { getUserData } = require('../controllers/userController');
+const userController = require('../controllers/userController');
+const { verifyToken } = require('../controllers/authController');
+
 const router = express.Router();
 
-router.get('/data', getUserData);
+router.get('/data', verifyToken, userController.getUserData);
 
 module.exports = router;
