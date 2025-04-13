@@ -8,6 +8,7 @@ const UserDashboard = () => {
   const [data, setData] = useState({ fines: [], documents: [] });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [message, setMessage] = useState(''); // State for success message
   const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
@@ -32,6 +33,36 @@ const UserDashboard = () => {
     fetchData();
   }, []);
 
+  const handlePayment = async (fine_id) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError('Authorization token missing');
+      return;
+    }
+    try {
+      console.log('Initiating payment for Fine ID:', fine_id); // Debug log
+      const res = await axios.post(
+        '/user/fine/pay',
+        { fine_id }, // Send fine ID in the request body
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log('Payment response:', res.data);
+
+      setMessage(res.data.message); // Display success message
+
+      // Update the status of the fine locally
+      setData((prevData) => ({
+        ...prevData,
+        fines: prevData.fines.map((fine) =>
+          fine._id === fine_id ? { ...fine, status: 'paid' } : fine
+        ),
+      }));
+    } catch (err) {
+      console.error('Error processing payment:', err.response?.data || err.message);
+      setError(err.response?.data?.message || 'Failed to process payment');
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('token'); // Remove the token from local storage
     navigate('/'); // Redirect to the login page
@@ -47,12 +78,15 @@ const UserDashboard = () => {
         <div className="alert alert-danger">{error}</div>
       ) : (
         <>
+          {message && <div className="alert alert-success">{message}</div>}
           <h3>Pending Fines</h3>
           <table className="table table-striped">
             <thead>
               <tr>
                 <th>Fine Type</th>
                 <th>Amount (₹)</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -61,11 +95,22 @@ const UserDashboard = () => {
                   <tr key={fine._id}>
                     <td>{fine.reason}</td>
                     <td>{fine.amount}</td>
+                    <td>{fine.status}</td>
+                    <td>
+                      {fine.status === 'unpaid' && (
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => handlePayment(fine._id)}
+                        >
+                          Pay Now
+                        </button>
+                      )}
+                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="2">No fines found</td>
+                  <td colSpan="4">No fines found</td>
                 </tr>
               )}
             </tbody>
